@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 
 import SpotifyApi from './spotify-api.mjs';
 
+// Get the instance of spotifyapi
 const spotifyApi =  new SpotifyApi();
 
 const PORT = 5000;
@@ -12,6 +13,7 @@ const app = express();
 const router = express.Router();
 app.use('/api', router);
 
+// Start the server after getting access token
 spotifyApi.getAccessToken().then((res) => {
   app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 }).catch((err) => {
@@ -19,6 +21,7 @@ spotifyApi.getAccessToken().then((res) => {
 });
 
 
+// Middleware that intercept albums by artists
 router.get('/artists/:artistId/albums', (req, res) => {
   const offset = req.query.offset | 0;
   const limit = req.query.limit | 50;
@@ -30,6 +33,7 @@ router.get('/artists/:artistId/albums', (req, res) => {
   });
 });
 
+// GET API to search based on artist name
 router.get('/artists', (req, res) => {
   spotifyApi.getArtists(req.query.query).then(response => {
     res.send(response);

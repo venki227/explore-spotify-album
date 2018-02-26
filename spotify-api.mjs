@@ -29,10 +29,16 @@ const status = (response) => {
     if (response.status === 200) {
       return Promise.resolve(response)
     } else {
+        console.log('error:: ', response);
       return Promise.reject(new Error(response.statusText))
     }
 }
 
+/**
+ * class that give access to spotify api
+ * 
+ * @class SpotifyApi
+ */
 class SpotifyApi {
     constructor(token) {
         this.access_token = token || '';
@@ -76,6 +82,14 @@ class SpotifyApi {
 
     }
 
+    /**
+     * transform search data
+     * 
+     * @param {any} data 
+     * @returns array
+     * 
+     * @memberOf SpotifyApi
+     */
     transformSearchData(data) {
         return data.map((ar) => {
             return {
@@ -84,7 +98,14 @@ class SpotifyApi {
             }
         })
     }
-
+    /**
+     * Transforms album data
+     * 
+     * @param {any} data 
+     * @returns array
+     * 
+     * @memberOf SpotifyApi
+     */
     transformData(data) {
         const transformedData = {
             albums: [],
