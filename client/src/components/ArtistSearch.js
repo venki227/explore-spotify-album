@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-
 class ArtistSearch extends Component {
     constructor(props) {
         super(props);
@@ -14,14 +13,53 @@ class ArtistSearch extends Component {
         }
     }
 
+    /**
+     * Handles user inputs
+     * 
+     * @param {any} event
+     * 
+     * @memberOf ArtistSearch
+     */
     handleInput(e) {
         const input = e.target.value;
         this.setState({
             searchInput: input
         })
+
         this.getSearchDetails(input);
     }
 
+    /**
+     * Utitliy to debounce anhy function for a given time
+     * 
+     * @param {any} fn 
+     * @param {any} time 
+     * @returns 
+     * 
+     * @memberOf ArtistSearch
+     */
+    debounce(fn, time) {
+        let timer;
+        return (...args) =>  {
+            const context = this;
+            if(timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                timer = null;
+                fn.apply(context, args);
+            }, time);
+            
+        }
+    }
+
+    /**
+     * Event that handles the artist selection
+     * 
+     * @param {any} artist 
+     * 
+     * @memberOf ArtistSearch
+     */
     selected(artist) {
         this.setState({
             selectedArtists: artist,
@@ -32,6 +70,14 @@ class ArtistSearch extends Component {
         })
     }
 
+    /**
+     * Utility to handle fetch responses
+     * 
+     * @param {any} response 
+     * @returns 
+     * 
+     * @memberOf ArtistSearch
+     */
     status(response){
     
         if (response.status === 200) {
@@ -41,7 +87,14 @@ class ArtistSearch extends Component {
         }
     }
 
-    getSearchDetails(query) {
+    /**
+     * Fetches the artists data based on user entered data 
+     * 
+     * @param {any} query 
+     * 
+     * @memberOf ArtistSearch
+     */
+    getSearchDetails = this.debounce((query) => {
         const url = `/api/artists?query=${query}`;
         fetch(url)
             .then(this.status)
@@ -55,7 +108,7 @@ class ArtistSearch extends Component {
                     artists: []
                 })
             })
-    }
+    },300);
 
     render() {
         return (

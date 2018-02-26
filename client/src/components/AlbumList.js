@@ -21,14 +21,31 @@ class AlbumList extends Component {
         this.handleScroll = this.handleScroll.bind(this);
         this.onArtistSeleted = this.onArtistSeleted.bind(this);
     }
+
+    /**
+     * Register scroll event to calculate scroll to bottom 
+     * 
+     * @memberOf AlbumList
+     */
     componentWillMount() {
         window.addEventListener('scroll', this.handleScroll);
     }
 
+    /**
+     * Unregister scroll after component removed from DOM
+     * 
+     * 
+     * @memberOf AlbumList
+     */
     componentWillUnMount() {
         window.removeEventListener('scroll', this.handleScroll);
     }
 
+    /**
+     * Get's a album list by takig initial selected artists data
+     * 
+     * @memberOf AlbumList
+     */
     componentDidMount() {
         const {selectedArtist} = this.state;
         if(selectedArtist && selectedArtist.id) {
@@ -36,6 +53,13 @@ class AlbumList extends Component {
         }   
     }
 
+    /**
+     * Set's the selected artists on clicking on item in typeahead
+     * 
+     * @param {any} artist 
+     * 
+     * @memberOf AlbumList
+     */
     onArtistSeleted(artist) {
         this.setState({
           selectedArtist: artist
@@ -44,6 +68,13 @@ class AlbumList extends Component {
         })
     }
 
+    /**
+     * Gets the new album list based on user selection on typeahead
+     * 
+     * @param {any} id 
+     * 
+     * @memberOf AlbumList
+     */
     getAlbumsForNewArtists(id) {
         this.setState({
             albums: []
@@ -63,6 +94,14 @@ class AlbumList extends Component {
         
     }
 
+    /**
+     * Utitliy to handle fetch response
+     * 
+     * @param {any} response 
+     * @returns 
+     * 
+     * @memberOf AlbumList
+     */
     status(response) {
         if (response.status === 200) {
           return Promise.resolve(response)
@@ -71,6 +110,13 @@ class AlbumList extends Component {
         }
     }
 
+    /**
+     * Used to get the albums based on the scroll
+     * 
+     * @param {any} offset 
+     * 
+     * @memberOf AlbumList
+     */
     getAlbums(offset) {
         const {selectedArtist} = this.state;
         this.setState({
@@ -92,6 +138,12 @@ class AlbumList extends Component {
         });
     }
 
+    /**
+     * Utitility to calculate scroll when it reaches the bottom of the page
+     * 
+     * 
+     * @memberOf AlbumList
+     */
     handleScroll() {
         if(this.scroller) {
             const heightOfContent = this.scroller.offsetHeight;
@@ -104,6 +156,12 @@ class AlbumList extends Component {
 
     }
 
+    /**
+     * Function that checks for end of the list per artist
+     * 
+     * 
+     * @memberOf AlbumList
+     */
     lazyLoad() {
         if(!this.state.loading && this.state.next) {
             const offset = this.state.offset + this.state.limit;
@@ -111,6 +169,13 @@ class AlbumList extends Component {
         }
     }
 
+    /**
+     * 
+     * 
+     * @returns album list elements
+     * 
+     * @memberOf AlbumList
+     */
     renderAlbum() {
         return (
             <div className="album-list" 
@@ -122,6 +187,13 @@ class AlbumList extends Component {
         )
     }
 
+    /**
+     * 
+     * 
+     * @returns Loader elements
+     * 
+     * @memberOf AlbumList
+     */
     renderLoader() {
         return (
             <div className="loader-wrapper">
