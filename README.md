@@ -12,7 +12,7 @@
 #   Project structure
     1. I wrapped create-react-app with my server-side code. 
     2. You will see client folder with all client files.
-    3. server code with server.mjs and spotify-api.mjs
+    3. server code in server.mjs and spotify-api.mjs(root level)
 
 #   Requirements to run application locally
     1. Install Yarn and Node > 9 (basically, one supports experimental features) globally
