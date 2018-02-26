@@ -2,7 +2,9 @@
     1. Search based on artist name
     2. Lazy loading the albums after scroll reaches bottom of page
     3. Play an album by clicking on the Play button
-    4. Click on 'open on spotify' to open a album in spotify.
+    4. Click on 'open on spotify' to open a album in spotify. 
+    5. I am not a good fan of Hoc. So, I used renderprops(GetPlayState) to rescue
+    6. I tweaked the webpack config to add SASS capability.
 
 #   Challenges
     1. Given url( https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums) is not working. It turned out be all spotify api's require oAuth now.
@@ -13,6 +15,12 @@
     1. I wrapped create-react-app with my server-side code. 
     2. You will see client folder with all client files.
     3. server code in server.mjs and spotify-api.mjs(root level)
+    [sadc](http://ad.com)
+    ## Components
+        1. AlbumList - acts as a container
+        2. Album - dumb component that takes album prop and render the album tile
+        3. GetPlayState - a renderProps pattern to get the state of play
+        4. ArtistsSearch - Independent Typeahead component to get the artists by name
 
 #   Requirements to run application locally
     1. Install Yarn and Node > 9 (basically, one supports experimental features) globally
