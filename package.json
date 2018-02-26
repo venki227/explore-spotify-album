@@ -1,0 +1,17 @@
+{
+  "name": "explore-spotify-albums",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon --experimental-modules server.mjs",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "node-fetch": "^2.0.0",
+    "nodemon": "^1.15.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
