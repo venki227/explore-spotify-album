@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Album from './Album';
+import ArtistSearch from './ArtistSearch';
 
 class AlbumList extends Component {
     constructor(props) {
@@ -12,8 +13,13 @@ class AlbumList extends Component {
             offset: 0,
             limit: 0,
             loading: false,
+            selectedArtist: {
+                id:'1mYsTxnqsietFxj1OgoGbG',
+                name:'A.R. Rahman'
+            }
         };
         this.handleScroll = this.handleScroll.bind(this);
+        this.onArtistSeleted = this.onArtistSeleted.bind(this);
     }
     componentWillMount() {
         window.addEventListener('scroll', this.handleScroll);
@@ -24,17 +30,18 @@ class AlbumList extends Component {
     }
 
     componentDidMount() {
-        const {selectedArtist} = this.props;
+        const {selectedArtist} = this.state;
         if(selectedArtist && selectedArtist.id) {
             this.getAlbumsForNewArtists(selectedArtist.id);
         }   
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps) {
-            const {selectedArtist} = nextProps;
-            this.getAlbumsForNewArtists(selectedArtist.id);
-        }
+    onArtistSeleted(artist) {
+        this.setState({
+          selectedArtist: artist
+        }, () => {
+            this.getAlbumsForNewArtists(this.state.selectedArtist.id);
+        })
     }
 
     getAlbumsForNewArtists(id) {
@@ -42,19 +49,21 @@ class AlbumList extends Component {
             albums: []
         }, () => {
             fetch(`api/artists/${id}/albums`)
+                .then(this.status)
                 .then(res => res.json())
                 .then(res => {
                     this.setState({
                         ...res,
                         albums: [...res.albums],
                     })
+                }).catch(err => {
+                    console.log('Something went wrong', err);
                 });
         })
         
     }
 
     status(response) {
-    
         if (response.status === 200) {
           return Promise.resolve(response)
         } else {
@@ -63,7 +72,7 @@ class AlbumList extends Component {
     }
 
     getAlbums(offset) {
-        const {selectedArtist} = this.props;
+        const {selectedArtist} = this.state;
         this.setState({
             loading: true
         })
@@ -124,7 +133,11 @@ class AlbumList extends Component {
 
     render() {
         return (
-            this.state.albums.length === 0 ? this.renderLoader() : this.renderAlbum()
+            <div className="album-container">
+                <ArtistSearch selectedArtist= {this.state.selectedArtist} onArtistSeleted={this.onArtistSeleted.bind(this)}/>
+                {this.state.albums.length === 0 ? this.renderLoader() : this.renderAlbum()}
+            </div>
+            
         )
     }
 }

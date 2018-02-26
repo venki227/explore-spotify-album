@@ -59,9 +59,9 @@ class ArtistSearch extends Component {
 
     render() {
         return (
-            <div>
-                <div className="search-wrapper">
-                    <input text="text" value={this.state.searchInput} className="search-input" onChange={this.handleInput}/>
+            <div className="search-wrapper">
+                <div className="input-wrapper">
+                    <input text="text" placeholder="Search By Artist Name" value={this.state.searchInput} className="search-input" onChange={this.handleInput}/>
                     <div className="flyout-wrapper">
                         <ul className="flyout">
                             {this.state.artists.map((artist, i) => (
