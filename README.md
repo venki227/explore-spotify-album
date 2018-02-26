@@ -5,6 +5,7 @@
 4. Click on 'open on spotify' to open a album in spotify. 
 5. I am not a good fan of Hoc. So, I used renderprops(GetPlayState) to rescue
 6. I tweaked the webpack config to add SASS capability.
+7. Used CSS3 grid layout
 
 #   Challenges
 1. Given url( https://api.spotify.com/v1/artists/0oSGxfWSnnOXhD2fKuz2Gy/albums) is not working. It turned out be all spotify api's require oAuth now.
